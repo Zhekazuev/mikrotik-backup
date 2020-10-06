@@ -2,14 +2,17 @@ import paramiko
 import config
 import re
 
-user = config.user
-password = config.password
+
+hub_user = config.hub_user
+hub_password = config.hub_password
+ap_user = config.ap_user
+ap_password = config.ap_password
 
 
 def get_aps_ips(ip_address):
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(hostname=ip_address, username=user, password=password)
+    ssh.connect(hostname=ip_address, username=hub_user, password=hub_password)
     stdin, stdout, stderr = ssh.exec_command("interface eoip print detail where running")
     eoip_interfaces = stdout.read().decode("utf8")
     ip_address = re.findall(r"\s+remote-address=(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s+", eoip_interfaces)
@@ -29,7 +32,7 @@ def main():
         print(f"Work with {ap_address}")
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(hostname=ap_address, username=user, password=password)
+        ssh.connect(hostname=ap_address, username=ap_user, password=ap_password)
         stdin, stdout, stderr = ssh.exec_command(f"system script add name=autobackup source=\"{script}\"")
         script_create_result = stdout.read().decode("utf8")
         print(f"\tCreated backup script result: {script_create_result}")
