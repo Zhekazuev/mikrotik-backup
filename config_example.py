@@ -1,5 +1,7 @@
-user = "user"
-password = "password"
+ap_user = "user"
+ap_password = "pass"
+hub_user = "user"
+hub_password = "pass"
 ips_hubs = ["1.1.1.1", "1.1.1.2", "1.1.1.3"]
 
 
