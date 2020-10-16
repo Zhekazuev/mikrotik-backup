@@ -71,7 +71,7 @@ def main():
             schedule_create_result = stdout.read().decode("utf8")
             print(f"\tCreated schedule result: {schedule_create_result}")
             print(f"End with {ap_address}")
-        except paramiko.SSHException:
+        except paramiko.ssh_exception:
             print(f"Problem with {ap_address}")
         ssh.close()
 
